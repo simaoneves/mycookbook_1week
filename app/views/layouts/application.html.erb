@@ -7,8 +7,28 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-
-<%= yield %>
+  <nav class="navbar navbar-default">
+    <div class="container-fuild">
+      <div class="navbar-header">
+        <div class="navbar-brand">
+          Mycookbook
+        </div>
+        <p class="navbar-text">
+          Your online recipes
+        </p>
+      </div>
+      <div class="collapse navbar-collapse" id="navbar_collapse">
+        <ul class="nav navbar-nav navbar-right">
+          <li>
+            <a href="#" class="navbar-link">Simon</a>
+          </li>
+          <li><a href="#" class="">Sign up</a></li>
+          <li><button href="#" class="btn btn-default navbar-btn">Log in</button></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <%= yield %>
 
 </body>
 </html>
