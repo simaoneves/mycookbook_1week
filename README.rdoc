@@ -1,0 +1,3 @@
+mycookbook
+==========
+Application made to better understand Rails
