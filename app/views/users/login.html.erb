@@ -1,0 +1,16 @@
+<div class="col-md-3"></div>
+<div class="col-md-6">
+  <div class="well">
+    <h1>Login</h1>
+    <p>As soon as you login, you will be able to create your recipes</p>
+    
+    <%= bootstrap_form_tag(inline_errors: false, :url => login_path) do |f| %>
+      <%= f.text_field :email, :class => "form-control" %>
+      <%= f.password_field :password, :class => "form-control" %>
+      <%= f.submit 'Login', :class => "btn btn-primary" %>
+    <% end %>
+  </div>
+
+</div>
+
+<div class="col-md-3"></div>

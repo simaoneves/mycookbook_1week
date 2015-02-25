@@ -19,16 +19,33 @@
       </div>
       <div class="collapse navbar-collapse" id="navbar_collapse">
         <ul class="nav navbar-nav navbar-right">
+          <% if session[:user_name] %>
+            <li>
+              <%= link_to(session[:user_name], "#", :class => "navbar-link") %>
+            </li>
+          <% end %>
           <li>
-            <a href="#" class="navbar-link">Simon</a>
+            <%= link_to "Sign up", 'sign_up' %>
           </li>
-          <li><a href="#" class="">Sign up</a></li>
-          <li><button href="#" class="btn btn-default navbar-btn">Log in</button></li>
+          <% if session[:user_name] %>
+            <li>
+              <%= button_to "Log out", 'logout', :class => "btn btn-default navbar-btn", :method => :get %>
+            </li>
+          <% else %>
+            <li>
+              <%= button_to "Log in", 'login', :class => "btn btn-default navbar-btn", :method => :get %>
+            </li>
+          <% end %>
         </ul>
       </div>
     </div>
   </nav>
-  <%= yield %>
-
+  <%= show_alerts %>
+  <div class="container-fluid">
+    <div class="row">
+      <%= yield %>
+    </div>
+  </div>
+  
 </body>
 </html>

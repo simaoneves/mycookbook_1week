@@ -1,6 +1,15 @@
-<h1>Editing User</h1>
+<div class="col-md-3"></div>
+<div class="col-md-6">
+  <div class="well">
+    <h1>Update information</h1>
 
-<%= render 'form' %>
+    <%= bootstrap_form_for(@user, inline_errors: false) do |f| %>
+      <%= render :partial => 'form', :locals => {:f => f} %>
+      <%= f.submit 'Update information', :class => "btn btn-primary" %>
+      <%= link_to 'Cancel', :back, :class => "btn btn-danger" %>
+    <% end %>
+  </div>
 
-<%= link_to 'Show', @user %> |
-<%= link_to 'Back', users_path %>
+</div>
+
+<div class="col-md-3"></div>
