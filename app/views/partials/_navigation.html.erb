@@ -5,19 +5,19 @@
 <% end %>
 <% if session[:user_name] %>
   <li>
-    <%= button_to "Log out", 'logout', :class => "btn btn-default navbar-btn", :method => :get %>
+    <%= link_to "Create new Recipe", new_recipe_path %>
   </li>
-  <!-- <li> -->
-    <%# button_to "Create Recipe", new_recipe_path, :class => "btn btn-default navbar-btn", :method => :get %>
-  <!-- </li> -->
-  <!-- <li> -->
-    <%# link_to "My recipes", recipes_path %>
-  <!-- </li> -->
+  <li>
+    <%= link_to "My recipes", recipes_path %>
+  </li>
+  <li>
+    <%= button_to "Log out", 'logout', :class => "btn btn-danger navbar-btn", :method => :get %>
+  </li>
 <% else %>
   <li>
     <%= link_to "Sign up", 'sign_up' %>
   </li>
   <li>
-    <%= button_to "Log in", 'login', :class => "btn btn-default navbar-btn", :method => :get %>
+    <%= button_to "Log in", 'login', :class => "btn btn-success navbar-btn", :method => :get %>
   </li>
 <% end %>
