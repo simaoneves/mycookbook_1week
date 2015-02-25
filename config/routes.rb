@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  root 'users#index'
 
   get "login" => "users#login"
   post "login" => "users#attempt_to_login"

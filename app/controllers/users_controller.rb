@@ -12,6 +12,7 @@ class UsersController < ApplicationController
 
   # GET /users/new
   def new
+    redirect_to users_path unless is_authenticated?
     @user = User.new
   end
 
