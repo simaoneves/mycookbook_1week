@@ -15,7 +15,7 @@ class RecipesController < ApplicationController
   def create
     @recipe = Recipe.new(recipe_params)
     if @recipe.save
-      redirect_to(@recipe, :notice => "Recipe Successfully created!")
+      redirect_to(@recipe, :notice => "Recipe successfully created!")
     else
       flash[:error] = "Something went wrong, please try again!"
       render 'new'
@@ -27,15 +27,18 @@ class RecipesController < ApplicationController
   end
 
   def update
-    
-  end
-
-  def delete
-    
+    @recipe = Recipe.find(params[:id])
+    if @recipe.update_attributes(recipe_params)
+      redirect_to(@recipe, :notice => "Recipe successfully updated!")
+    else
+      flash[:error] = "Something went wrong with the update, please try again!"
+      render 'edit'
+    end
   end
 
   def destroy
-    
+    recipe = Recipe.find(params[:id]).destroy
+    redirect_to(recipes_path, :notice => "Recipe #{recipe.name} successffully deleted!")
   end
 
   private

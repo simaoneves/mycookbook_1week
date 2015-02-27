@@ -1,6 +1,39 @@
 <div class="col-md-12">
-  <% @recipes.each do |recipe| %>
-    <%= recipe.name %>
-    <br>
-  <%  end %>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>First name</th>
+        <th>Show</th>
+        <th>Edit</th>
+        <th>Destroy</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @recipes.each do |recipe| %>
+        <tr>
+          <td><%= recipe.name %></td>
+          <td><%= link_to 'Show', recipe %></td>
+          <td><%= link_to 'Edit', edit_recipe_path(recipe) %></td>
+          <td><%= link_to 'Destroy', recipe, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 </div>
+
+<% @recipes.each do |recipe| %>
+  <div class="col-md-4">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <%= recipe.name %>
+        </h3>
+      </div>
+      <div class="panel-body">
+        <%= recipe.description %>
+      </div>
+      
+    </div>
+  </div>
+<% end %>
