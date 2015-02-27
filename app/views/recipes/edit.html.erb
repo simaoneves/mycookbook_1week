@@ -1,0 +1,15 @@
+<div class="col-md-3"></div>
+<div class="col-md-6">
+  <div class="well">
+    <h1>Update Recipe</h1>
+    <p>Enter all your recipe details bellow:</p>
+    
+    <%= bootstrap_form_for(@recipe, inline_errors: false, :url => recipe_path) do |f| %>
+      <%= render(:partial => 'form', :locals => {:f => f}) %>
+      <%= f.submit 'Update Recipe', :class => "btn btn-success" %>
+    <% end %>
+  </div>
+
+</div>
+
+<div class="col-md-3"></div>
