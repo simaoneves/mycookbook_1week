@@ -4,6 +4,7 @@
       <div class="caption">
         <img src="/assets/images/Hot_pizza.jpg" alt="..." class="img-responsive">
         <h3><%= recipe.name %></h3>
+        <p>by <%= link_to(recipe.user.fullname, user_path(recipe.user)) %></p>
         <p>
           <%= link_to('Show', recipe_path(recipe), :class => "btn btn-success") %>
           <%= link_to('Edit', edit_recipe_path(recipe), :class => "btn btn-warning") %>

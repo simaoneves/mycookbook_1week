@@ -8,6 +8,7 @@ class UsersController < ApplicationController
 
   # GET /users/1
   def show
+    @all_recipes_of_user = @user.recipes
   end
 
   # GET /users/new
