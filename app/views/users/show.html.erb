@@ -8,7 +8,9 @@
 
 <div class="col-md-3">
   <div class="recipe-image">
-    <img src="/assets/images/Hot_pizza.jpg" alt="" class="img-responsive">
+    <a href="#" class="thumbnail">
+      <img src="/assets/images/Hot_pizza.jpg" alt="" class="img-responsive">
+    </a>
   </div>
   <div class="panel panel-default">
     <div class="panel-heading">
@@ -20,27 +22,65 @@
     <div class="panel-body">
       <%= @user.email %>
     </div>
-    <div class="panel-body">
-      <%= link_to 'Edit details', edit_user_path(@user), :class => "btn btn-warning" %>
-    </div>
+    <% if current_user_profile? %>
+      <div class="panel-body">
+        <%= link_to 'Edit details', edit_user_path(@user), :class => "btn btn-warning" %>
+      </div>
+    <% end %>
+    
   </div>
 </div>
 
 <div class="col-md-9">
-  <% @all_recipes_of_user.each do |recipe| %>
-    <div class="col-md-4 col-sm-4">
-      <div class="thumbnail">
-        <div class="caption">
-          <img src="/assets/images/Hot_pizza.jpg" alt="..." class="img-responsive">
-          <h3><%= recipe.name %></h3>
-          <p>by <%= link_to(recipe.user.fullname, user_path(:id => 1)) %></p>
-          <p>
-            <%= link_to('Show', recipe_path(recipe), :class => "btn btn-success") %>
-            <%= link_to('Edit', edit_recipe_path(recipe), :class => "btn btn-warning") %>
-            <%= link_to('Destroy', recipe, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger") %>
-          </p>
+  <div class="row">
+    <% @all_visible_recipes_of_user.each do |recipe| %>
+      <div class="col-md-4 col-sm-4">
+        <div class="thumbnail">
+          <div class="caption">
+            <%= link_to( image_tag("/assets/images/Hot_pizza.jpg", :class => "img-responsive"), recipe_path(recipe), :class => "thumbnail") %>
+            <h3><%= recipe.name %></h3>
+            <p>by <%= link_to(recipe.user.fullname, user_path(:id => 1)) %></p>
+            <% if current_user_profile? %>
+              <p>
+              <%= link_to('Show', recipe_path(recipe), :class => "btn btn-success") %>
+              <%= link_to('Edit', edit_recipe_path(recipe), :class => "btn btn-warning") %>
+              <%= link_to('Destroy', recipe, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger") %>
+            </p>
+            <% else %>
+              <p>
+                <%= link_to('Copy Recipe', "/copy_recipe/#{recipe.id}", :class => "btn btn-success") %>
+              </p>
+            <% end %>
+            
+          </div>
         </div>
       </div>
+    <% end %>
+  </div>
+
+  <% if !@all_invisible_recipes_of_user.empty? && current_user_profile? %>
+    <div class="row">
+      <div class="col-md-12">
+        <h3>Invisible recipes</h3>
+      </div>
+      <% @all_invisible_recipes_of_user.each do |recipe| %>
+        <div class="col-md-4 col-sm-4">
+          <div class="thumbnail">
+            <div class="caption">
+              <%= link_to( image_tag("/assets/images/Hot_pizza.jpg", :class => "img-responsive"), recipe_path(recipe), :class => "thumbnail") %>
+              <h3><%= recipe.name %></h3>
+              <p>by <%= link_to(recipe.user.fullname, user_path(:id => 1)) %></p>
+              <p>
+                <%= link_to('Show', recipe_path(recipe), :class => "btn btn-success") %>
+                <%= link_to('Edit', edit_recipe_path(recipe), :class => "btn btn-warning") %>
+                <%= link_to('Destroy', recipe, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger") %>
+              </p>
+            </div>
+          </div>
+        </div>
+      <% end %>
     </div>
   <% end %>
+
+  
 </div>

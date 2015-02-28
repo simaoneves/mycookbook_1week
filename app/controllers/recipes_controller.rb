@@ -1,7 +1,7 @@
 class RecipesController < ApplicationController
 
   def index
-    @recipes = Recipe.all
+    @recipes = Recipe.visible
   end
 
   def show
@@ -20,6 +20,10 @@ class RecipesController < ApplicationController
       flash[:error] = "Something went wrong, please try again!"
       render 'new'
     end
+  end
+
+  def copy_recipe
+    @recipe_copy = Recipe.find(params[:id])
   end
 
   def edit
@@ -44,7 +48,7 @@ class RecipesController < ApplicationController
   private
 
   def recipe_params
-    params.require(:recipe).permit(:name, :description, :visible)
+    params.require(:recipe).permit(:name, :description, :visible, :user_id)
   end
 
 end

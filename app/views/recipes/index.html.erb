@@ -2,40 +2,13 @@
   <div class="col-md-4 col-sm-4">
     <div class="thumbnail">
       <div class="caption">
-        <img src="/assets/images/Hot_pizza.jpg" alt="..." class="img-responsive">
+        <%= link_to( image_tag("/assets/images/Hot_pizza.jpg", :class => "img-responsive"), recipe_path(recipe), :class => "thumbnail") %>
         <h3><%= recipe.name %></h3>
         <p>by <%= link_to(recipe.user.fullname, user_path(recipe.user)) %></p>
         <p>
-          <%= link_to('Show', recipe_path(recipe), :class => "btn btn-success") %>
-          <%= link_to('Edit', edit_recipe_path(recipe), :class => "btn btn-warning") %>
-          <%= link_to('Destroy', recipe, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger") %>
+          <%= recipe.description %>
         </p>
       </div>
     </div>
   </div>
 <% end %>
-
-
-<div class="col-md-12">
-  <table class="table">
-    <thead>
-      <tr>
-        <th>First name</th>
-        <th>Show</th>
-        <th>Edit</th>
-        <th>Destroy</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <% @recipes.each do |recipe| %>
-        <tr>
-          <td><%= recipe.name %></td>
-          <td><%= link_to 'Show', recipe %></td>
-          <td><%= link_to 'Edit', edit_recipe_path(recipe) %></td>
-          <td><%= link_to 'Destroy', recipe, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-</div>

@@ -24,4 +24,13 @@ module ApplicationHelper
     end
 
   end
+
+  def current_user_profile?
+    @user.id == session[:user_id]
+  end
+
+  def current_user_recipe?
+    @recipe.user.id == session[:user_id]
+  end
+  
 end

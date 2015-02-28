@@ -6,8 +6,20 @@
 
 <div class="col-md-4">
   <div class="recipe-image">
-    <img src="/assets/images/Hot_pizza.jpg" alt="" class="img-responsive">
+    <a href="#" class="thumbnail">
+      <img src="/assets/images/Hot_pizza.jpg" alt="" class="img-responsive">
+    </a>
   </div>
+  <% if !@recipe.visible %>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Recipe Visibility</h3>
+      </div>
+      <div class="panel-body">
+        <p>Recipe is invisible at the moment</p>
+      </div>
+    </div>
+  <% end %>
   <div class="panel panel-default">
     <div class="panel-heading">
       <h3 class="panel-title">Ingredients</h3>
@@ -19,6 +31,16 @@
         <li class="list-group-item">Recipe.ingredients</li>
       </ul>
     </div>
+    <% if current_user_recipe? %>
+      <div class="panel-body">
+        <%= link_to('Edit', edit_recipe_path(@recipe), :class => "btn btn-warning") %>
+        <%= link_to('Destroy', @recipe, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger") %>
+      </div>
+    <% else %>
+      <div class="panel-body">
+        <%= link_to('Copy Recipe', "/copy_recipe/#{@recipe.id}", :class => "btn btn-success") %>
+      </div>
+    <% end %>
   </div>
 </div>
 <div class="col-md-8">
