@@ -37,7 +37,7 @@
       <div class="col-md-4 col-sm-4">
         <div class="thumbnail">
           <div class="caption">
-            <%= link_to( image_tag("/assets/images/Hot_pizza.jpg", :class => "img-responsive"), recipe_path(recipe), :class => "thumbnail") %>
+            <%= link_to( image_tag(recipe.photo_url, :class => "img-responsive"), recipe_path(recipe), :class => "thumbnail") %>
             <h3><%= recipe.name %></h3>
             <p>by <%= link_to(recipe.user.fullname, user_path(:id => 1)) %></p>
             <% if current_user_profile? %>

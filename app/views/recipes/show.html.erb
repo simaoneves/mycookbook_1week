@@ -7,7 +7,7 @@
 <div class="col-md-4">
   <div class="recipe-image">
     <a href="#" class="thumbnail">
-      <img src="/assets/images/Hot_pizza.jpg" alt="" class="img-responsive">
+      <%= image_tag(@recipe.photo_url, :class => "img-responsive") %>
     </a>
   </div>
   <% if !@recipe.visible %>

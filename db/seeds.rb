@@ -16,7 +16,7 @@ puts "Created Users successfully!"
 puts "Creating Recipes..."
 User.all.each do |user|
   3.times do |index|
-    Recipe.create(:name => "Recipe #{index}", :description => "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias impedit fugiat corrupti incidunt, repellendus ut repudiandae. Placeat ad expedita accusantium fuga at, exercitationem id iste! Mollitia ad omnis, perspiciatis quae?", :visible => true, :user_id => user.id)
+    Recipe.create(:name => "Recipe #{index}", :description => "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias impedit fugiat corrupti incidunt, repellendus ut repudiandae. Placeat ad expedita accusantium fuga at, exercitationem id iste! Mollitia ad omnis, perspiciatis quae?", :visible => true, :user_id => user.id, :photo_url => "")
   end
 end
 puts "Created Recipes successfully!"
