@@ -13,19 +13,9 @@ class RecipesController < ApplicationController
   end
 
   def create
+    upload_file :recipe if params[:recipe][:photo_url]
 
-    uploaded_io = params[:recipe][:photo_url]
-    file_path = treat_file_name uploaded_io.original_filename
-    File.open(Rails.root.join('public', 'uploads', file_path), 'wb') do |file|
-      file.write(uploaded_io.read)
-    end
-
-    photo = Hash.new()
-    photo[:photo_url] = '/uploads/' + file_path
-
-    final_hash = recipe_params.merge(photo)
-
-    @recipe = Recipe.new(final_hash)
+    @recipe = Recipe.new(recipe_params.merge($photo))
     if @recipe.save
       redirect_to(@recipe, :notice => "Recipe successfully created!")
     else
@@ -48,7 +38,13 @@ class RecipesController < ApplicationController
 
   def update
     @recipe = Recipe.find(params[:id])
-    if @recipe.update_attributes(recipe_params)
+
+    if params[:recipe][:photo_url]
+      remove_file @recipe.photo_url unless @recipe.photo_url.empty?
+      upload_file :recipe
+    end
+
+    if @recipe.update_attributes(recipe_params.merge($photo))
       redirect_to(@recipe, :notice => "Recipe successfully updated!")
     else
       flash[:error] = "Something went wrong with the update, please try again!"
@@ -68,7 +64,7 @@ class RecipesController < ApplicationController
     File.delete("./public#{file}")
   end
 
-  def treat_file_name(file)
+  def rename_file(file)
     Time.now.strftime("%Y%m%d-%H%M%S-") + file.gsub(" ", "_")
   end
 

@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :redirect_if_not_authenticated, except: [:login, :new, :attempt_to_login, :create]
 
   # GET /users
   def index
@@ -14,7 +15,6 @@ class UsersController < ApplicationController
 
   # GET /users/new
   def new
-    redirect_to users_path unless is_authenticated?
     @user = User.new
   end
 
@@ -24,7 +24,9 @@ class UsersController < ApplicationController
 
   # POST /users
   def create
-    @user = User.new(user_params)
+
+    
+    @user = User.new(user_params.merge($photo))
 
     if @user.save
       redirect_to :login, notice: 'User was successfully created.'
@@ -49,7 +51,7 @@ class UsersController < ApplicationController
   end
 
   def login
-    redirect_to users_path unless is_authenticated?
+    
   end
 
   def attempt_to_login
@@ -88,11 +90,11 @@ class UsersController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def user_params
-      params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation, :bio)
+      params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation, :bio, :photo_url)
     end
 
-    def is_authenticated?
-      session[:user_id].blank? || session[:user_name].blank?
+    def redirect_if_not_authenticated
+      redirect_to login_path unless is_authenticated?
     end
 
 end
