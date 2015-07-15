@@ -16,8 +16,11 @@ Would like to learn
 1week challenge
 =============
 This project was created for the 1week challenge, where i challenge myself to build a product in that time, trying to learn as much as possible
-- Project started in 24/2/2014
-- Project ends in 3/3/2014
+
+- Project started in 24/2/2015
+- Project ended in 3/3/2015
+
+After these dates i continued to work on the project a little more
 
 
 Fututre features
@@ -26,8 +29,8 @@ Fututre features
 - Filter search by vegan/lactose intolerance/etc
 
 
-
 NEXT TO TODOS
 =============
 - Add ingredients
 - Add photo to user
+- Add mobile menu

@@ -2,6 +2,9 @@ class RecipesController < ApplicationController
 
   def index
     @recipes = Recipe.visible
+    @recipes.each do |recipe|
+      recipe.description = recipe.description.truncate(120)
+    end
   end
 
   def show
@@ -13,9 +16,11 @@ class RecipesController < ApplicationController
   end
 
   def create
-    upload_file :recipe if params[:recipe][:photo_url]
 
-    @recipe = Recipe.new(recipe_params.merge($photo))
+    file_to_upload = params[:recipe][:photo_url]
+    hash_with_photo_path = file_to_upload ? upload_file(file_to_upload, 'uploads', :photo_url) : Hash.new
+
+    @recipe = Recipe.new(recipe_params.merge(hash_with_photo_path))
     if @recipe.save
       redirect_to(@recipe, :notice => "Recipe successfully created!")
     else
@@ -38,13 +43,12 @@ class RecipesController < ApplicationController
 
   def update
     @recipe = Recipe.find(params[:id])
+    file_to_upload = params[:recipe][:photo_url]
 
-    if params[:recipe][:photo_url]
-      remove_file @recipe.photo_url unless @recipe.photo_url.empty?
-      upload_file :recipe
-    end
+    remove_file @recipe.photo_url if !@recipe.photo_url.empty? && file_to_upload
+    hash_with_photo_path = file_to_upload ? upload_file(file_to_upload, 'uploads', :photo_url) : Hash.new    
 
-    if @recipe.update_attributes(recipe_params.merge($photo))
+    if @recipe.update_attributes(recipe_params.merge(hash_with_photo_path))
       redirect_to(@recipe, :notice => "Recipe successfully updated!")
     else
       flash[:error] = "Something went wrong with the update, please try again!"
@@ -59,14 +63,6 @@ class RecipesController < ApplicationController
   end
 
   private
-
-  def remove_file(file)
-    File.delete("./public#{file}")
-  end
-
-  def rename_file(file)
-    Time.now.strftime("%Y%m%d-%H%M%S-") + file.gsub(" ", "_")
-  end
 
   def recipe_params
     params.require(:recipe).permit(:name, :description, :visible, :user_id, :photo_url)

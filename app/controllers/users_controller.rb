@@ -25,8 +25,10 @@ class UsersController < ApplicationController
   # POST /users
   def create
 
+    file_to_upload = params[:user][:photo_url]
+    hash_with_photo_path = file_to_upload ? upload_file(file_to_upload, 'uploads', :photo_url) : Hash.new
     
-    @user = User.new(user_params.merge($photo))
+    @user = User.new(user_params.merge(hash_with_photo_path))
 
     if @user.save
       redirect_to :login, notice: 'User was successfully created.'
@@ -37,7 +39,13 @@ class UsersController < ApplicationController
 
   # PATCH/PUT /users/1
   def update
-    if @user.update(user_params)
+
+    file_to_upload = params[:user][:photo_url]
+
+    remove_file @user.photo_url if !@user.photo_url.empty? && file_to_upload
+    hash_with_photo_path = file_to_upload ? upload_file(file_to_upload, 'uploads', :photo_url) : Hash.new
+
+    if @user.update(user_params.merge(hash_with_photo_path))
       redirect_to @user, notice: 'User was successfully updated.'
     else
       render :edit
@@ -46,7 +54,8 @@ class UsersController < ApplicationController
 
   # DELETE /users/1
   def destroy
-    @user.destroy
+    user = @user.destroy
+    remove_file user.photo_url
     redirect_to users_url, notice: 'User was successfully destroyed.'
   end
 

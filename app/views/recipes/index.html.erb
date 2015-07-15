@@ -6,7 +6,7 @@
         <h3><%= recipe.name %></h3>
         <p>by <%= link_to(recipe.user.fullname, user_path(recipe.user)) %></p>
         <p>
-          <%= recipe.description.size > 120 ? recipe.description.slice(0..117) + '..' : recipe.description %>
+          <%= recipe.description %>
         </p>
       </div>
     </div>
